@@ -57,13 +57,13 @@ query_result = query_excel_file(
 
 ```bash
 # Basic usage
-/usr/bin/python3 /opt/data/excel_queryer.py --query "标签ID" 4096 "/opt/data/网络机房设备信息表（含内部编码）.xlsx"
+python3 scripts/excel_queryer.py --query "标签ID" 4096 "/opt/data/网络机房设备信息表（含内部编码）.xlsx"
 
 # Find all rows matching criteria in a sheet
-/usr/bin/python3 /opt/data/excel_queryer.py --columns "标签 ID,设备型号,设备类型" --value "Huawei S6720-30C-EI-24S" "/path/to/file.xlsx"
+python3 scripts/excel_queryer.py --columns "标签 ID,设备型号,设备类型" --value "Huawei S6720-30C-EI-24S" "/path/to/file.xlsx"
 
 # Query multiple sheets at once
-/usr/bin/python3 /opt/data/excel_queryer.py --sheets "网络机房,应用机房" --query "资产编号" * "/path/to/file.xlsx"
+python3 scripts/excel_queryer.py --sheets "网络机房,应用机房" --query "资产编号"  "/path/to/file.xlsx"
 ```
 
 ### Step 3: Get formatted results as table or list
@@ -82,7 +82,7 @@ result = query_excel_file(
 
 ## Code Template for Reuse
 
-The query script saves two reusable files in `/opt/data/`:
+This skill includes two reusable scripts in the scripts/ directory:
 
 1. **find_row.py** - Quick usage example to find a specific row
 2. **excel_queryer.py** - Full interactive CLI tool with options
@@ -99,7 +99,7 @@ The query script saves two reusable files in `/opt/data/`:
 ### Pattern 1: Query by single column, single value
 
 ```bash
-/usr/bin/python3 /opt/data/excel_queryer.py \
+python3 scripts/excel_queryer.py \
   --query "标签 ID" \
   '4096' \
   '/opt/data/网络机房设备信息表（含内部编码）.xlsx'
@@ -108,7 +108,7 @@ The query script saves two reusable files in `/opt/data/`:
 ### Pattern 2: Query by multiple columns, AND logic
 
 ```bash
-/usr/bin/python3 /opt/data/excel_queryer.py \
+python3 scripts/excel_queryer.py \
   --columns "标签 ID,资产编号" \
   '4096,H2107875' \
   '/opt/data/网络机房设备信息表（含内部编码）.xlsx'
@@ -117,7 +117,7 @@ The query script saves two reusable files in `/opt/data/`:
 ### Pattern 3: Query by device model across all sheets
 
 ```bash
-/usr/bin/python3 /opt/data/excel_queryer.py \
+python3 scripts/excel_queryer.py \
   --columns "设备型号" \
   'H3C UniServer R4900 G3' \
   '/opt/data/网络机房设备信息表（含内部编码）.xlsx'
@@ -126,7 +126,7 @@ The query script saves two reusable files in `/opt/data/`:
 ### Pattern 4: Check if a value exists in cell (case-insensitive)
 
 ```bash
-/usr/bin/python3 /opt/data/excel_queryer.py \
+python3 scripts/excel_queryer.py \
   --columns "设备型号,设备类型" \
   'Dell PowerEdge,RAC' \
   '/opt/data/网络机房设备信息表（含内部编码）.xlsx'
@@ -134,9 +134,7 @@ The query script saves two reusable files in `/opt/data/`:
 
 ### Pattern 5: Export results to CSV after query
 
-The script automatically creates:
-- `/opt/data/network_equipment_网络机房.csv`
-- `/opt/data/network_equipment_应用机房.csv`
+The script automatically creates CSV files in the current working directory (e.g., ./network_equipment_网络机房.csv).
 
 ## Error Handling Scenarios
 
@@ -194,5 +192,5 @@ The script automatically creates:
 ---
 
 **Author**: Hermes Agent  
-**Last Updated**: September 2026  
+**Last Updated**: 2026
 **Tested On**: Ubuntu 13+ with Python 3.13+, pandas 2.x, xlrd/openpyxl
